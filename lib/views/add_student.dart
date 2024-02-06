@@ -3,7 +3,8 @@ import 'package:sqflite_todo/utils/validations.dart';
 import 'package:sqflite_todo/widgets/text_field_widget.dart';
 
 class AddStudent extends StatelessWidget {
-  AddStudent({super.key});
+  AddStudent({super.key, this.isEdit = false});
+  final bool isEdit;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController batchNoController = TextEditingController();
@@ -13,7 +14,7 @@ class AddStudent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Student"),
+        title: Text(isEdit ? "Edit Student" : "Add Student"),
         centerTitle: true,
       ),
       body: Padding(
@@ -26,17 +27,17 @@ class AddStudent extends StatelessWidget {
                 TextFeildWidget(
                   hintText: 'Name',
                   controller: nameController,
-                  validator: (p0) => Validations.isEmpty(p0, 'Name'),
+                  validator: (value) => Validations.isEmpty(value, 'Name'),
                 ),
                 TextFeildWidget(
                   hintText: 'Age',
                   controller: ageController,
-                  validator: (p0) => Validations.isNumber(p0, 'Age'),
+                  validator: (value) => Validations.isNumber(value, 'Age'),
                 ),
                 TextFeildWidget(
                   hintText: 'Batch No',
                   controller: batchNoController,
-                  validator: (p0) => Validations.isEmpty(p0, 'BatchNo'),
+                  validator: (value) => Validations.isEmpty(value, 'BatchNo'),
                 ),
                 TextFeildWidget(
                   hintText: 'Email',

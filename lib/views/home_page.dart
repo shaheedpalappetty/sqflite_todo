@@ -18,13 +18,13 @@ class HomeScreenState extends State<HomeScreen> {
       ),
       body: ListView.builder(
         itemCount: 5,
-        itemBuilder: (context, index) => const ListTile(
+        itemBuilder: (context, index) => ListTile(
           leading: CircleAvatar(
-            child: Text('1'),
+            child: Text("${index + 1}"),
           ),
-          title: Text('Name'),
-          subtitle: Text("BatchNo"),
-          trailing: Text('Age'),
+          title: const Text('Name'),
+          subtitle: const Text("BatchNo"),
+          trailing: const Text('Age'),
         ),
       ),
       floatingActionButton: FloatingActionButton(
