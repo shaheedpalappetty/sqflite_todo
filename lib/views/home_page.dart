@@ -12,7 +12,9 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Todo'),
+        centerTitle: true,
       ),
       body: ListView.builder(
         itemCount: 5,
