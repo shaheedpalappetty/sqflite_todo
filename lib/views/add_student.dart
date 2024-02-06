@@ -1,20 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_todo/model/user.dart';
+import 'package:sqflite_todo/services/db_helper.dart';
 import 'package:sqflite_todo/utils/validations.dart';
 import 'package:sqflite_todo/widgets/text_field_widget.dart';
 
-class AddStudent extends StatelessWidget {
-  AddStudent({super.key, this.isEdit = false});
+class AddStudent extends StatefulWidget {
+  const AddStudent({super.key, this.isEdit = false, this.student});
   final bool isEdit;
+  final User? student;
+
+  @override
+  State<AddStudent> createState() => _AddStudentState();
+}
+
+class _AddStudentState extends State<AddStudent> {
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController ageController = TextEditingController();
+
   final TextEditingController batchNoController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isEdit) {
+      nameController.text = widget.student!.name;
+      ageController.text = widget.student!.age.toString();
+      batchNoController.text = widget.student!.batchNo;
+      emailController.text = widget.student!.email;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEdit ? "Edit Student" : "Add Student"),
+        title: Text(widget.isEdit ? "Edit Student" : "Add Student"),
         centerTitle: true,
       ),
       body: Padding(
@@ -46,9 +71,9 @@ class AddStudent extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      addStudentClicked();
+                      addStudentClicked(context);
                     },
-                    child: const Text('Add Student'))
+                    child: Text(widget.isEdit ? 'Edit Student' : 'Add Student'))
               ],
             ),
           ),
@@ -57,11 +82,43 @@ class AddStudent extends StatelessWidget {
     );
   }
 
-  addStudentClicked() {
+  addStudentClicked(context) async {
     if (_formKey.currentState!.validate()) {
       //check Email is Available
+      bool isAvailable = false;
+      if (!widget.isEdit) {
+        isAvailable = await DatabaseHelper.instance
+            .checkEmailAvailabilty(emailController.text);
+      }
 
-      //Add to Database
+      if (isAvailable || widget.isEdit) {
+        User student = User(
+            age: int.parse(ageController.text),
+            name: nameController.text,
+            batchNo: batchNoController.text,
+            email: emailController.text);
+        int? id;
+        if (widget.isEdit) {
+          id = await DatabaseHelper.instance.updateStudentDetails(student);
+        } else {
+          id = await DatabaseHelper.instance.addStudentToDB(student);
+        }
+
+        if (id != null) {
+          student.id = id;
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              backgroundColor: Colors.green, content: Text('Added')));
+          Navigator.of(context).pop(true);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              backgroundColor: Colors.red,
+              content: Text('Something Went Wrong! Plese Try Again!')));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.red,
+            content: Text('Email Already Taken,Please Try with Another One')));
+      }
     }
   }
 }

@@ -17,7 +17,7 @@ class User {
       id: json['id'] as int,
       name: json['name'] as String,
       age: json['age'] as int,
-      batchNo: json['batchNo'] as String,
+      batchNo: json['batch_no'] as String,
       email: json['email'] as String,
     );
   }
@@ -27,7 +27,7 @@ class User {
       'id': id,
       'name': name,
       'age': age,
-      'batchNo': batchNo,
+      'batch_no': batchNo,
       'email': email
     };
   }

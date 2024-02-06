@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,7 +16,7 @@ class DatabaseHelper {
   static const studentAge = 'age';
   static const studentBatchNo = 'batch_no';
 
-  DatabaseHelper instance = DatabaseHelper();
+  static final DatabaseHelper instance = DatabaseHelper();
 
   static Database? _database;
 
@@ -29,7 +31,11 @@ class DatabaseHelper {
   initDB() async {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = join(directory.path, dbName);
-    return await openDatabase(path, version: dbVersion, onCreate: onCreate);
+    return await openDatabase(
+      path,
+      version: dbVersion,
+      onCreate: onCreate,
+    );
   }
 
   Future onCreate(Database db, int version) async {
@@ -55,8 +61,23 @@ class DatabaseHelper {
 //add Student
   Future<int?> addStudentToDB(User student) async {
     Database? db = await instance.database;
-
     int id = await db!.insert(dbTable, student.toJson());
+    return id;
+  }
+
+  //get List of Students
+  Future<List<User>> getListOfStudents() async {
+    Database? db = await instance.database;
+    final List<Map<String, dynamic>> result = await db!.query(dbTable);
+    return result.map((e) => User.fromJson(e)).toList();
+  }
+
+  //update
+  Future<int> updateStudentDetails(User student) async {
+    print(student.name);
+    Database? db = await instance.database;
+    final id = await db!.update(dbTable, student.toJson(),
+        where: '$studentId = ?', whereArgs: [student.id]);
     return id;
   }
 }
