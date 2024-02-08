@@ -1,17 +1,40 @@
 # sqflite_todo
 
-A new Flutter project.
+# Flutter Student Database App
 
-## Getting Started
+A Flutter application that allows users to manage student details using an offline Sqflite database.
 
-This project is a starting point for a Flutter application.
+## Table of Contents
 
-A few resources to get you started if this is your first Flutter project:
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Introduction
+
+This Flutter application provides a simple interface for users to add, edit, and delete student details. The app uses the Sqflite package to manage an offline SQLite database, ensuring data persistence even when the device is offline.
+
+## Features
+
+- Add new student details including name, age, and contact information.
+- Edit existing student details.
+- Delete student records.
+- Offline functionality with Sqflite database.
+- Clean and intuitive user interface.
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/flutter-student-database.git
+
+
+2. Navigate to the project directory:
+
+  ```bash
+  cd flutter-student-database
+
+    
 # sqflite_todo
