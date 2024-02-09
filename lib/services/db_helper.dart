@@ -74,10 +74,21 @@ class DatabaseHelper {
 
   //update
   Future<int> updateStudentDetails(User student) async {
-    print(student.id);
     Database? db = await instance.database;
     final id = await db!.update(dbTable, student.toJson(),
         where: '$studentId = ?', whereArgs: [student.id]);
     return id;
+  }
+
+  //delete
+  Future<bool> deleteStudentDetails(int id) async {
+    try {
+      Database? db = await instance.database;
+      await db!.delete(dbTable, where: '$studentId = ?', whereArgs: [id]);
+      return true;
+    } catch (e) {
+      print("Error deleting student: $e");
+      return false;
+    }
   }
 }
