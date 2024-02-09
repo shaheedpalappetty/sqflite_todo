@@ -33,9 +33,11 @@ class HomeScreenState extends State<HomeScreen> {
           : ListView.builder(
               itemCount: datas!.length,
               itemBuilder: (context, index) => ListTile(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => DetailsPage(student: datas![index]),
-                )),
+                onTap: () async {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DetailsPage(student: datas![index]),
+                  ));
+                },
                 leading: CircleAvatar(
                   child: Text("${index + 1}"),
                 ),
@@ -52,12 +54,9 @@ class HomeScreenState extends State<HomeScreen> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final data = await Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => AddStudent(),
+          await Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const AddStudent(),
           ));
-          if (data != null && data == true) {
-            fetchData();
-          }
         },
         child: const Icon(Icons.add),
       ),

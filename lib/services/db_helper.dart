@@ -74,7 +74,7 @@ class DatabaseHelper {
 
   //update
   Future<int> updateStudentDetails(User student) async {
-    print(student.name);
+    print(student.id);
     Database? db = await instance.database;
     final id = await db!.update(dbTable, student.toJson(),
         where: '$studentId = ?', whereArgs: [student.id]);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite_todo/model/user.dart';
 import 'package:sqflite_todo/services/db_helper.dart';
 import 'package:sqflite_todo/utils/validations.dart';
+import 'package:sqflite_todo/views/home_page.dart';
 import 'package:sqflite_todo/widgets/text_field_widget.dart';
 
 class AddStudent extends StatefulWidget {
@@ -93,12 +94,14 @@ class _AddStudentState extends State<AddStudent> {
 
       if (isAvailable || widget.isEdit) {
         User student = User(
-            age: int.parse(ageController.text),
-            name: nameController.text,
-            batchNo: batchNoController.text,
-            email: emailController.text);
+          age: int.parse(ageController.text),
+          name: nameController.text,
+          batchNo: batchNoController.text,
+          email: emailController.text,
+        );
         int? id;
         if (widget.isEdit) {
+          student.id = widget.student!.id;
           id = await DatabaseHelper.instance.updateStudentDetails(student);
         } else {
           id = await DatabaseHelper.instance.addStudentToDB(student);
@@ -108,7 +111,11 @@ class _AddStudentState extends State<AddStudent> {
           student.id = id;
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               backgroundColor: Colors.green, content: Text('Added')));
-          Navigator.of(context).pop(true);
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
+              (route) => false);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               backgroundColor: Colors.red,
