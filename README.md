@@ -1,6 +1,6 @@
 # sqflite_todo
 
-# Flutter Student Database App
+# Student Database App
 
 A Flutter application that allows users to manage student details using an offline Sqflite database.
 
