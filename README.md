@@ -1,6 +1,6 @@
 # sqflite_todo
 
-# Flutter Student Database App
+# Student Database App
 
 A Flutter application that allows users to manage student details using an offline Sqflite database.
 
@@ -35,6 +35,25 @@ This Flutter application provides a simple interface for users to add, edit, and
 
   ```bash
   cd flutter-student-database
+
+
+3. Install dependencies:
+
+  ```bash
+  flutter pub get
+
+## Usage
+
+1. Ensure you have Flutter and Dart installed on your machine.
+
+2. Connect a device or start an emulator.
+
+3. Run the application:
+
+    ```bash
+  flutter pub get
+
+4. Explore the app and manage student details.
 
     
 # sqflite_todo
